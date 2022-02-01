@@ -1,4 +1,4 @@
-import self as self
+
 from selenium import webdriver
 import time
 import unittest
@@ -32,8 +32,13 @@ class LoginTest(unittest.TestCase):
         self.driver.find_element(By.XPATH, "//*[@id='welcome-menu']/ul/li[3]/a").click()
         time.sleep(2)
 
+
+
     @classmethod
     def tearDownClass(cls):
         cls.driver.close()
         cls.driver.quit()
         cls.print("Test completed")
+
+    if __name__  == '_main_':
+      unittest.main()
