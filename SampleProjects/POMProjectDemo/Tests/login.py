@@ -2,6 +2,8 @@
 from selenium import webdriver
 import time
 import unittest
+from SampleProjects.POMProjectDemo.Pages.loginPage import LoginPage
+from SampleProjects.POMProjectDemo.Pages.homePage import HomePage
 from selenium.webdriver.common.by import By
 
 class LoginTest(unittest.TestCase):
@@ -15,30 +17,34 @@ class LoginTest(unittest.TestCase):
 
 
     def test_login_valid(self):
-        self.driver.get("https://opensource-demo.orangehrmlive.com/")
-        time.sleep(5)
-        self.driver.find_element(By.XPATH, "//*[@id='txtUsername']").click()
+        driver = self.driver
+        driver.get("https://opensource-demo.orangehrmlive.com/")
+
+        login = LoginPage(driver)
         time.sleep(2)
-        self.driver.find_element(By.XPATH, "//*[@id='txtUsername']").send_keys("Admin")
-        time.sleep(5)
-        self.driver.find_element(By.XPATH, "//*[@id='txtPassword']").click()
+        login.enter_username("Admin")
         time.sleep(2)
-        self.driver.find_element(By.XPATH, "//*[@id='txtPassword']").send_keys("admin123")
-        time.sleep(5)
-        self.driver.find_element(By.XPATH, "//*[@id='btnLogin']").click()
+        login.enter_password("admin123")
         time.sleep(2)
-        self.driver.find_element(By.XPATH, "//*[@id='welcome']").click()
-        time.sleep(2)
-        self.driver.find_element(By.XPATH, "//*[@id='welcome-menu']/ul/li[3]/a").click()
+        login.click_login()
+
         time.sleep(2)
 
+        homepage = HomePage(driver)
+        time.sleep(2)
+        homepage.click_welcome()
+        time.sleep(2)
+        homepage.click_logout()
+
+
+        time.sleep(2)
 
 
     @classmethod
     def tearDownClass(cls):
         cls.driver.close()
         cls.driver.quit()
-        cls.print("Test completed")
+        # cls.print("Test completed")
 
     if __name__  == '_main_':
       unittest.main()
